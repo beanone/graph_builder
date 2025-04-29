@@ -1,6 +1,33 @@
-# Graph Builder
+<p align="center">
+  <img src="https://raw.githubusercontent.com/beanone/graph_builder/refs/heads/main/docs/assets/logos/banner.svg" alt="Graph Context Banner" width="100%">
+</p>
+
 
 A Python library for building and managing graph data structures with support for incremental updates and efficient storage.
+
+[![Python Versions](https://img.shields.io/pypi/pyversions/graph_builder)](https://pypi.org/project/graph_builder)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/beanone/graph_builder/blob/main/LICENSE)
+[![Tests](https://github.com/beanone/graph_builder/actions/workflows/tests.yml/badge.svg)](https://github.com/beanone/graph_builder/actions?query=workflow%3Atests)
+[![Coverage](https://codecov.io/gh/beanone/graph_builder/branch/main/graph/badge.svg)](https://codecov.io/gh/beanone/graph_builder)
+[![Code Quality](https://img.shields.io/badge/code%20style-ruff-000000)](https://github.com/astral-sh/ruff)
+[![PyPI version](https://img.shields.io/pypi/v/graph_builder)](https://pypi.org/project/graph_builder)
+
+
+## Table of Contents
+
+- [Architecture](#architecture)
+  - [Core Components](#core-components)
+  - [Architecture Diagram](#architecture-diagram)
+  - [Storage Structure](#storage-structure)
+  - [Data Model](#data-model)
+- [Usage](#usage)
+  - [Basic Usage](#basic-usage)
+  - [Compaction](#compaction)
+- [Features](#features)
+- [Installation](#installation)
+- [Requirements](#requirements)
+- [License](#license)
+
 
 ## Architecture
 
@@ -133,7 +160,7 @@ pip install graph-builder
 
 ## Requirements
 
-- Python 3.7+
+- Python 3.12+
 - SQLite3 (for SQLiteIndexer)
 
 ## License

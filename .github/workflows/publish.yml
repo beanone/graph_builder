@@ -1,32 +1,38 @@
-name: Publish
+name: Release to PyPI
 
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*' # Trigger on version tags
 
 jobs:
-  publish:
+  release:
+    name: Build and publish to PyPI
     runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://pypi.org/project/graph-builder
+    permissions:
+      id-token: write # IMPORTANT: mandatory for trusted publishing
+
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0
+        fetch-depth: 0 # Important for vcs version to work correctly
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
+        cache: 'pip'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build hatchling hatch-vcs
+        pip install build twine
 
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        python -m build
-        twine upload dist/*
+    - name: Build package
+      run: python -m build
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
