@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.7"
 license = "MIT"
 authors = [
-    { name = "Your Name", email = "your.email@example.com" },
+    { name = "Beanone Team", email = "beanone@example.com" }
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -22,8 +22,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourname/graph-builder"
-Repository = "https://github.com/yourname/graph-builder"
+Homepage = "https://github.com/beanone/graph_builder"
+Repository = "https://github.com/beanone/graph_builder"
 
 [tool.hatch.build.targets.wheel]
 packages = ["graph_builder"]
