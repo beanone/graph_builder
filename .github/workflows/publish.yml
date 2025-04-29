@@ -14,7 +14,6 @@ jobs:
       url: https://pypi.org/project/graph-builder
     permissions:
       id-token: write # IMPORTANT: mandatory for trusted publishing
-
     steps:
     - uses: actions/checkout@v4
       with:
