@@ -1,0 +1,141 @@
+# Graph Builder
+
+A Python library for building and managing graph data structures with support for incremental updates and efficient storage.
+
+## Architecture
+
+The library follows a modular architecture with the following components:
+
+### Core Components
+
+1. **GraphBuilder**
+   - Main class for building and managing the graph
+   - Supports incremental entity and relation updates
+   - Maintains append-only logs for all changes
+   - Integrates with configurable indexers for efficient lookups
+
+2. **GraphCompactor**
+   - Processes the append-only logs to create compacted representations
+   - Merges entity updates based on timestamps
+   - Builds adjacency lists for efficient graph traversal
+   - Supports sharding for large datasets
+
+3. **Indexers**
+   - Abstract interface for entity indexing
+   - Implementations:
+     - `SQLiteIndexer`: Persistent storage using SQLite
+     - `MemoryIndexer`: In-memory storage with JSON serialization
+
+### Architecture Diagram
+
+```mermaid
+graph TD
+    subgraph "Graph Builder"
+        GB[GraphBuilder] --> |add_entity| EL[Entity Log]
+        GB --> |add_relation| RL[Relation Log]
+        GB --> |index| IDX[Indexer]
+    end
+
+    subgraph "Graph Compactor"
+        GC[GraphCompactor] --> |read| EL
+        GC --> |read| RL
+        GC --> |write| ES[Entity Shards]
+        GC --> |write| AL[Adjacency Lists]
+    end
+
+    subgraph "Storage"
+        EL --> |append-only| LOGS[Logs]
+        RL --> |append-only| LOGS
+        IDX --> |persist| DB[(SQLite DB)]
+        ES --> |sharded| STORAGE[Storage]
+        AL --> |compacted| STORAGE
+    end
+
+    classDef primary fill:#E6D5AC,stroke:#D4B483,stroke-width:2px,color:#000
+    classDef secondary fill:#D4E6AC,stroke:#B4D483,stroke-width:2px,color:#000
+    classDef storage fill:#ACD4E6,stroke:#83B4D4,stroke-width:2px,color:#000
+
+    class GB,GC primary
+    class EL,RL,ES,AL secondary
+    class LOGS,DB,STORAGE storage
+```
+
+### Storage Structure
+
+```
+output_dir/
+├── entities/          # Compacted entity shards
+├── relations/         # Relation data
+├── logs/             # Append-only update logs
+│   ├── entity_updates.jsonl
+│   └── relation_updates.jsonl
+├── adjacency/        # Compacted adjacency lists
+└── index.db         # SQLite index (if using SQLiteIndexer)
+```
+
+### Data Model
+
+- **Entities**: Nodes in the graph with properties
+- **Relations**: Directed edges between entities with properties
+- **Updates**: Timestamped changes to entities and relations
+- **Shards**: Partitioned storage for efficient processing
+
+## Usage
+
+### Basic Usage
+
+```python
+from graph_builder import GraphBuilder, GraphBuilderConfig
+
+# Initialize with configuration
+config = GraphBuilderConfig(
+    output_dir="graph_output",
+    shard_size=500,
+    indexer_type="sqlite"  # or "memory"
+)
+graph = GraphBuilder(config)
+
+# Add entities with properties
+graph.add_entity(1, {"name": "Alice"})
+graph.add_entity(2, {"name": "Bob"})
+
+# Add relations between entities
+graph.add_relation(100, 1, 2, {"type": "FRIEND"})
+
+# Finalize to ensure all data is written
+graph.finalize()
+```
+
+### Compaction
+
+```python
+from graph_builder import GraphCompactor
+
+# Compact the graph data
+compactor = GraphCompactor(base_dir="graph_output")
+compactor.compact_entities()  # Merge entity updates
+compactor.build_adjacency()   # Build adjacency lists
+```
+
+## Features
+
+- **Incremental Updates**: Support for timestamped updates to entities and relations
+- **Efficient Storage**: Append-only logs with periodic compaction
+- **Flexible Indexing**: Choose between SQLite or in-memory indexing
+- **Sharding**: Support for large datasets through sharding
+- **Timestamp Tracking**: All changes are tracked with UTC timestamps
+
+## Installation
+
+```bash
+pip install graph-builder
+```
+
+## Requirements
+
+- Python 3.7+
+- SQLite3 (for SQLiteIndexer)
+
+## License
+
+MIT License
