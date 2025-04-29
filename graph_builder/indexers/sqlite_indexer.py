@@ -19,7 +19,10 @@ class SQLiteIndexer(BaseIndexer):
 
     def add_entity(self, entity_id, properties):
         name = properties.get("name", None)
-        self.cursor.execute("INSERT OR REPLACE INTO entity_index (entity_id, name) VALUES (?, ?)", (entity_id, name))
+        self.cursor.execute(
+            "INSERT OR REPLACE INTO entity_index (entity_id, name) VALUES (?, ?)",
+            (entity_id, name),
+        )
 
     def finalize(self):
         self.conn.commit()
