@@ -12,6 +12,7 @@ license = "MIT"
 authors = [
     { name = "Beanone Team", email = "beanone@example.com" }
 ]
+
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
