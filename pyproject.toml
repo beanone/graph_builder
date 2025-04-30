@@ -36,6 +36,7 @@ version-file = "graph_builder/__init__.py"
 
 [tool.pytest.ini_options]
 addopts = "-ra -q --cov=graph_builder --cov-report=term-missing"
+asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
 
 [tool.coverage.run]
