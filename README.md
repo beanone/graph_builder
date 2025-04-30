@@ -42,10 +42,10 @@ The library follows a modular architecture with the following components:
    - Integrates with configurable indexers for efficient lookups.
 
 2. **GraphCompactor**
-   - Processes the append-only logs to create compacted representations
-   - Merges entity updates based on timestamps
-   - Builds adjacency lists for efficient graph traversal
-   - Supports sharding for large datasets
+   - Processes the append-only logs to create compacted representations.
+   - Merges entity updates based on timestamps.
+   - Builds adjacency lists for efficient graph traversal.
+   - Supports sharding for large datasets.
 
 3. **Indexers**
    - Abstract interface for entity indexing
