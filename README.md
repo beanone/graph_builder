@@ -2,8 +2,7 @@
   <img src="https://raw.githubusercontent.com/beanone/graph_builder/refs/heads/main/docs/assets/logos/banner.svg" alt="Graph Context Banner" width="100%">
 </p>
 
-
-A Python library for building and managing graph data structures with support for incremental updates and efficient storage.
+This library builds a graph (entities and relations) incrementally, and stores them in append-only logs. Now supports optional community tagging.
 
 [![Python Versions](https://img.shields.io/pypi/pyversions/graph_builder)](https://pypi.org/project/graph_builder)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/beanone/graph_builder/blob/main/LICENSE)
@@ -114,22 +113,16 @@ output_dir/
 ```python
 from graph_builder import GraphBuilder, GraphBuilderConfig
 
-# Initialize with configuration
-config = GraphBuilderConfig(
-    output_dir="graph_output",
-    shard_size=500,
-    indexer_type="sqlite"  # or "memory"
-)
+config = GraphBuilderConfig(output_dir="graph_output")
 graph = GraphBuilder(config)
 
-# Add entities with properties
-graph.add_entity(1, {"name": "Alice"})
-graph.add_entity(2, {"name": "Bob"})
+# Ingest entities with optional community
+graph.add_entity(1, {"name": "Alice", "type": "Person", "community_id": "team_alpha"})
+graph.add_entity(2, {"name": "Bob", "type": "Person", "community_id": "team_alpha"})
 
-# Add relations between entities
-graph.add_relation(100, 1, 2, {"type": "FRIEND"})
+# Create a relation
+graph.add_relation(100, 1, 2, {"type": "FRIENDS_WITH"})
 
-# Finalize to ensure all data is written
 graph.finalize()
 ```
 

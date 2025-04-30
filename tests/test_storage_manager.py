@@ -88,6 +88,7 @@ def test_add_relation():
         assert record["properties"] == properties
         assert "update_time" in record
         assert record["update_time"].endswith("Z")
+        graph.finalize()
 
     # Cleanup
     os.remove(graph.relation_log_path)
