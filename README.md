@@ -36,10 +36,10 @@ The library follows a modular architecture with the following components:
 ### Core Components
 
 1. **GraphBuilder**
-   - Main class for building and managing the graph
-   - Supports incremental entity and relation updates
-   - Maintains append-only logs for all changes
-   - Integrates with configurable indexers for efficient lookups
+   - Main class for building and managing the graph.
+   - Supports incremental entity and relation updates.
+   - Maintains append-only logs for all changes.
+   - Integrates with configurable indexers for efficient lookups.
 
 2. **GraphCompactor**
    - Processes the append-only logs to create compacted representations
