@@ -111,7 +111,8 @@ output_dir/
 ### Basic Usage
 
 ```python
-from graph_builder import GraphBuilder, GraphBuilderConfig
+from graph_builder.storage_manager import GraphBuilder
+from graph_builder.config import GraphBuilderConfig
 
 config = GraphBuilderConfig(output_dir="graph_output")
 graph = GraphBuilder(config)
