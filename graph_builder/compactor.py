@@ -68,3 +68,25 @@ class GraphCompactor:
                 f.write(
                     json.dumps({"entity_id": entity_id, "relations": relations}) + "\n"
                 )
+
+    def compact_relations(self):
+        """Compact relation updates into sharded files."""
+        relation_log_path = os.path.join(
+            self.base_dir, "logs", "relation_updates.jsonl"
+        )
+        os.makedirs(os.path.join(self.base_dir, "relations"), exist_ok=True)
+
+        # Read all relations
+        relations = []
+        with open(relation_log_path, encoding="utf-8") as f:
+            for line in f:
+                relations.append(json.loads(line))
+
+        # Sort by relation_id and update_time to ensure consistent ordering
+        relations.sort(key=lambda x: (x["relation_id"], x["update_time"]))
+
+        # Write to shard file
+        shard_path = os.path.join(self.base_dir, "relations", "shard_0.jsonl")
+        with open(shard_path, "w", encoding="utf-8") as f:
+            for relation in relations:
+                f.write(json.dumps(relation) + "\n")
